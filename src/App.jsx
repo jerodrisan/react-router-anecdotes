@@ -1,5 +1,15 @@
 import { useState } from 'react'
 
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  Navigate,
+  useParams,
+  useNavigate,
+} from "react-router-dom"
+
 const Menu = () => {
   const padding = {
     paddingRight: 5
@@ -102,6 +112,9 @@ const App = () => {
   ])
 
   const [notification, setNotification] = useState('')
+  const padding = {
+    paddingRight:5
+  }
 
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000)
@@ -113,23 +126,39 @@ const App = () => {
 
   const vote = (id) => {
     const anecdote = anecdoteById(id)
-
     const voted = {
       ...anecdote,
       votes: anecdote.votes + 1
     }
-
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
   }
 
   return (
     <div>
-      <h1>Software anecdotes</h1>
+      {/* <h1>Software anecdotes</h1>
       <Menu />
       <AnecdoteList anecdotes={anecdotes} />
       <About />
       <CreateNew addNew={addNew} />
+      <Footer /> */}
+      <Router>
+        <div>
+
+          <Link style={padding} to="/">anecdotes</Link>
+          <Link style={padding} to="/create">create</Link>
+          <Link style={padding} to="/new">new</Link>
+          <Link style={padding} to="/about">about</Link>
+
+          <Routes>
+
+            <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />}/>
+            <Route path="/create" element={<CreateNew addNew={addNew}/>}/>
+
+          </Routes>
+        </div>
+      </Router>
       <Footer />
+
     </div>
   )
 }
