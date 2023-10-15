@@ -178,6 +178,7 @@ const App = () => {
             <Route path="/anecdotes" element={<AnecdoteList anecdotes={anecdotes} />}/>
             <Route path="/anecdotes/:id" element={<Anecdote anecdoteById={anecdoteById}/>}/>
             <Route path="/create" element={<CreateNew addNew={addNew}/>}/>
+            <Route path="/new" element ={<Navigate replace to="/create" />} />
             <Route path="/about" element={<About />}/>
           </Routes>
         </div>
