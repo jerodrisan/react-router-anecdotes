@@ -21,7 +21,7 @@ const Anecdote = ({anecdoteById}) => { // pasamos la funcion anecdoteById la cua
       <div>
           <h2>{anecdota.content} by {anecdota.author}</h2>
           <p>has {anecdota.votes} votes</p>
-          <p>for more info see  {anecdota.info} votes</p>
+          <p>for more info see  {anecdota.info} </p>
 
       </div>
     )
