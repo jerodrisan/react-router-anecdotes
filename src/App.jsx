@@ -10,6 +10,8 @@ import {
   useNavigate,
 } from "react-router-dom"
 
+import useField from './hooks/index' //Importamos el custom hook para usarlo en el formulario
+
 
 
 const Anecdote = ({anecdoteById}) => { // pasamos la funcion anecdoteById la cual lleva por parametro la id y devuelve la anecdota  
@@ -50,26 +52,25 @@ const About = () => (
 
 const Footer = () => (
   <div>
-    Anecdote app for <a href='https://fullstackopen.com/'>Full Stack Open</a>.
+    Anecdote app for <a href='https://fullstackopen.com/'>Full Stack Open</a>.<br />
 
     See <a href='https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js'>https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js</a> for the source code.
   </div>
 )
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
+  
+  const content = useField ('content')
+  const author = useField ('author')
+  const info = useField ('info')
+
+  console.log(content)
+
   const navigate = useNavigate()
 
   const handleSubmit = (e) => {   
     e.preventDefault()
-    props.addNew({
-      content,
-      author,
-      info,
-      votes: 0
-    })
+    props.addNew({content: content.value, author:author.value, info: info.value, votes: 0 })
     navigate('/')
   }
 
@@ -77,17 +78,14 @@ const CreateNew = (props) => {
     <div>
       <h2>create a new anecdote</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+        <div>        
+          content <input name={content.name} value={content.value} onChange={content.onChange} />
         </div>
-        <div>
-          author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+        <div>         
+          author <input name={author.name} value={author.value} onChange={author.onChange} />
         </div>
-        <div>
-          url for more info
-          <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
+        <div>        
+          url for more info <input name={info.name} value={info.value} onChange={info.onChange} />
         </div>
         <button>create</button>
       </form>
