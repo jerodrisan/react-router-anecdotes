@@ -10,7 +10,8 @@ import {
   useNavigate,
 } from "react-router-dom"
 
-import useField from './hooks/index' //Importamos el custom hook para usarlo en el formulario
+import {useField} from './hooks/index' //Importamos el custom hook para usarlo en el formulario
+//import {useClear} from './hooks/index'
 
 
 
@@ -50,28 +51,36 @@ const About = () => (
   </div>
 )
 
-const Footer = () => (
-  <div>
-    Anecdote app for <a href='https://fullstackopen.com/'>Full Stack Open</a>.<br />
+const Footer = () => {
+  const sourceCode = "https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js/"
+  const courseUrl = "https://fullstackopen.com/"
+  return(
+    <div>
+      Anecdote app for <a href={courseUrl}>Full Stack Open</a>.<br />
+      See <a href={sourceCode}>{sourceCode}</a> for the source code.
+    </div>
+  )
+}
 
-    See <a href='https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js'>https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js</a> for the source code.
-  </div>
-)
-
-const CreateNew = (props) => {
+const CreateNew = (props) => {   
   
-  const content = useField ('content')
-  const author = useField ('author')
-  const info = useField ('info')
-
-  console.log(content)
-
-  const navigate = useNavigate()
+  const content = useField ({type:'text',name:'content'})
+  const author = useField ({type:'text',name:'author'})
+  const info = useField ({type:'text',name:'info'})  
+  //const navigate = useNavigate() //creamos la anecdota y nos redirije directamente al link de anecdotes para verla recien creada
 
   const handleSubmit = (e) => {   
-    e.preventDefault()
+    e.preventDefault()    
+    console.log('valor boton ', e.target.name)
     props.addNew({content: content.value, author:author.value, info: info.value, votes: 0 })
-    navigate('/')
+    //navigate('/')
+  }
+
+  const handleReset = (ev) =>{
+    ev.preventDefault()
+    content.reset()
+    author.reset()
+    info.reset()    
   }
 
   return (
@@ -79,15 +88,18 @@ const CreateNew = (props) => {
       <h2>create a new anecdote</h2>
       <form onSubmit={handleSubmit}>
         <div>        
-          content <input name={content.name} value={content.value} onChange={content.onChange} />
+          content <input type={content.type} name={content.name} value={content.value} onChange={content.onChange} />
         </div>
         <div>         
-          author <input name={author.name} value={author.value} onChange={author.onChange} />
+          {/* author <input {...author} />  si ponemos el spread , entonces se añadiria el campo reset al input lo cual es erroneo*/}
+          author <input type={author.type} name={author.name} value={author.value} onChange={author.onChange} />
         </div>
         <div>        
-          url for more info <input name={info.name} value={info.value} onChange={info.onChange} />
+          {/* url for more info <input {...info} /> No usaremos el spread operador*/}
+          url for more info <input type={info.type} name={info.name} value={info.value} onChange={info.onChange} />
         </div>
-        <button>create</button>
+        <button >create</button>
+        <button type= "button" onClick={handleReset}>reset</button>
       </form>
     </div>
   )

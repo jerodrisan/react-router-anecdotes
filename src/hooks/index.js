@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 
-const useField = (name) =>{
-
-    const [value, setValue] = useState('');
+export const useField = ({type,name}) =>{
+  
+    const [value, setValue] = useState('');    
     const onChange  = (ev) =>{
         setValue(ev.target.value);
     }
-    return ({name, value, onChange}) 
+    const reset =() => setValue('')
+    return ({ type,name, value, onChange, reset})
+   
 }
 
-export default useField
