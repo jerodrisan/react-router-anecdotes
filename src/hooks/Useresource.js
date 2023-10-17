@@ -2,21 +2,21 @@
 import { useState } from "react"
 
 const useResource = (baseUrl) => {
-    // const [resources, setResources] = useState([])
+    const [resources, setResources] = useState([])
   
-    // // ...
+    // ...
   
-    // const create = (resource) => {
-    //   // ...
-    // }
+    const create = (resource) => {
+      // ...
+    }
   
-    // const service = {
-    //   create
-    // }
+    const service = {
+      create
+    }
   
-    // return [
-    //   resources, service
-    // ]
+    return [
+      resources, service
+    ]
   }
 
   export default useResource;
