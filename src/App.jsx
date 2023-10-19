@@ -1,7 +1,11 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+//import { useState, useEffect } from 'react'
+//import axios from 'axios'
+import { useEffect } from 'react'
 import {useField} from './hooks/Usefield'
 import useResource from './hooks/Useresource'
+
+//instalamos json server como dependencia de desarrollo : npm install json-server --save-dev
+//añadimos en el package.json, scripts  : "server": "json-server -p3005 --watch db.json" 
 
 
 const App = () => {
@@ -11,6 +15,11 @@ const App = () => {
 
   const [notes, noteService] = useResource('http://localhost:3005/notes')
   const [persons, personService] = useResource('http://localhost:3005/persons')
+
+  useEffect(()=>{
+    personService.getAll()
+    noteService.getAll() 
+  },[])
 
   const handleNoteSubmit = (event) => {
     event.preventDefault()
@@ -37,7 +46,7 @@ const App = () => {
         number <input {...number} />
         <button>create</button>
       </form>
-      {persons.map(n => <p key={n.id}>{n.name} {n.number}</p>)}
+      { persons.map(n => <p key={n.id}>{n.name} {n.number}</p>)}
     </div>
   )
 }
